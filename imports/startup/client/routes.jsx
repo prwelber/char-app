@@ -10,7 +10,7 @@ import { Traits } from '../../ui/pages/traits.jsx'
 
 import { One } from '../../ui/pages/one.jsx';
 import { Two } from '../../ui/pages/two.jsx';
-import { QuestionAnswer } from '../../ui/pages/qa.jsx'
+import qaContainer from '../../ui/pages/qa.jsx'
 
 import { NotFound } from '../../ui/pages/not-found.jsx'
 
@@ -24,7 +24,7 @@ Meteor.startup( () => {
           <Route path="/one" component={ One } />
           <Route path="/two" component={ Two } />
         </Route>
-        <Route path="/t/:name" component={ QuestionAnswer } />
+        <Route path="/t/:name" component={ qaContainer } />
       </Route>
       <Route path="*" component={ NotFound } />
     </Router>,

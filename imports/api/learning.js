@@ -12,19 +12,20 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'learning.insert'(questions) {
-    check(questions, Array);
+  'learning.insert'(data) {
+    check(data, Object);
+    check(data.questions, Array)
 
 
     // user should be logge din before inserting task
-    if (!Meteor.userId()) {
-      throw new Meteor.Error('not-authorized');
-    }
+    // if (!Meteor.userId()) {
+    //   throw new Meteor.Error('not-authorized');
+    // }
 
     LearningQuestions.insert({
-      q1: questions[0],
-      q2: questions[1],
-      q3: questions[2],
+      questions: data.questions,
+      description: data.description,
+      title: data.title,
       createdAt: new Date(),
     });
   },
