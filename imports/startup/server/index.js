@@ -1,12 +1,12 @@
 import { Meteor } from 'meteor/meteor'
 import { LearningQuestions } from '/imports/api/learning.js';
+import { HumilityQuestions } from '/imports/api/humility.js';
 
 if (Meteor.isServer) {
   Meteor.startup(() => {
-    console.log('starting up')
     let questionCount = LearningQuestions.find({}).count();
 
-    console.log('tasks', questionCount)
+    console.log('learning q count', questionCount)
     if (questionCount < 1) {
       let data = {};
       data['questions'] = [
@@ -17,6 +17,22 @@ if (Meteor.isServer) {
       data['description'] = 'Love of learning description placeholder here'
       data['title'] = 'Love of Learning'
       Meteor.call('learning.insert', data)
+    }
+  })
+  Meteor.startup(() => {
+    let questionCount = HumilityQuestions.find({}).count();
+
+    console.log('humility q count', questionCount)
+    if (questionCount < 1) {
+      let data = {};
+      data['questions'] = [
+        'What are your thoughts on humility?',
+        'What two things in my life am I most grateful for?',
+        'Can you admit when you are wrong? Can you give an example?'
+      ]
+      data['description'] = 'Humility description placeholder here'
+      data['title'] = 'Humility'
+      Meteor.call('humility.insert', data)
     }
   })
 }

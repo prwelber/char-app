@@ -51,7 +51,7 @@ class Question extends React.Component {
 }
 
 
-export class QuestionAnswer extends React.Component {
+export class Learning extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -63,8 +63,10 @@ export class QuestionAnswer extends React.Component {
   }
 
   handleBlur(data) {
-    let updated = this.state.answers.concat([data])
-    this.setState({answers: updated})
+    if (data.answer) {
+      let updated = this.state.answers.concat([data])
+      this.setState({answers: updated})
+    }
   }
 
   handleSubmit() {
@@ -106,12 +108,12 @@ Question.propTypes = {
   value: React.PropTypes.string
 };
 
-QuestionAnswer.propTypes = {
+Learning.propTypes = {
   data: PropTypes.array.isRequired
 }
 
 //
-export default qaContainer = createContainer(() => {
+export default learningContainer = createContainer(() => {
   // Meteor.subscribe('learning')
 
   const qaHandle = Meteor.subscribe('learning')
@@ -123,4 +125,4 @@ export default qaContainer = createContainer(() => {
     questionCount: LearningQuestions.find({}).count(),
     currentUser: Meteor.user(),
   };
-}, QuestionAnswer);
+}, Learning);
