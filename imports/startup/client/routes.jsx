@@ -10,10 +10,19 @@ import { Traits } from '../../ui/pages/traits.jsx'
 
 import { One } from '../../ui/pages/one.jsx';
 import { Two } from '../../ui/pages/two.jsx';
-import Learning from '../../ui/pages/learning.jsx'
+import learningContainer from '../../ui/pages/learning.jsx'
 import Humility from '../../ui/pages/humility.jsx'
+import Answers from '../../ui/pages/answers.jsx'
 
 import { NotFound } from '../../ui/pages/not-found.jsx'
+
+function requireAuth(nextState, replace) {
+  if (!Meteor.user()) {
+    replace({
+      pathname: '/'
+    })
+  }
+}
 
 Meteor.startup( () => {
   render(
@@ -25,8 +34,9 @@ Meteor.startup( () => {
           <Route path="/one" component={ One } />
           <Route path="/two" component={ Two } />
         </Route>
-        <Route path="/t/learning" component={ learningContainer } />
-        <Route path="/t/humility" component={ humilityContainer } />
+        <Route path="/answers" component={ answersContainer } />
+        <Route path="/t/learning" component={ learningContainer } onEnter={requireAuth} />
+        <Route path="/t/humility" component={ humilityContainer } onEnter={requireAuth} />
       </Route>
       <Route path="*" component={ NotFound } />
     </Router>,

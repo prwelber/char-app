@@ -16,7 +16,8 @@ export const Navigation = () => (
       </Navbar.Header>
       <Nav>
         <NavItem><Link to="/traits">Traits</Link></NavItem>
-        <NavItem><Link to="/two">Two</Link></NavItem>
+        <NavItem><Link to="/answers">Past Answers</Link></NavItem>
+        {/* <NavItem><Link to="/two">Two</Link></NavItem> */}
       </Nav>
       <Nav pullRight>
         <NavItem style={accountsStyle}><AccountsUIWrapper /></NavItem>

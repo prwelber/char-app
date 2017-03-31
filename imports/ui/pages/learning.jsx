@@ -3,7 +3,7 @@ import { FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, PageHeade
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { LearningQuestions } from '../../api/learning.js';
-
+import { UserAnswers } from '../../api/userAnswers.js'
 
 const flexCenter = {
   display: 'flex',
@@ -71,6 +71,14 @@ export class Learning extends React.Component {
 
   handleSubmit() {
     console.log('handle submit', this.state)
+    var clean = _.uniq(this.state.answers)
+    console.log('clean', clean)
+    const data = {
+      answers: clean,
+      trait: this.props.data['0'].title
+    }
+    Meteor.call('insertUserAnswers', data)
+
   }
   render() {
     if (!this.props.loading) {
