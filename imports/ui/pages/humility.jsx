@@ -6,6 +6,9 @@ import { HumilityQuestions } from '../../api/humility.js';
 
 import Question from './Question.jsx'
 
+import _ from 'lodash'
+
+
 
 const flexCenter = {
   display: 'flex',
@@ -39,7 +42,12 @@ export class Humility extends React.Component {
   }
 
   handleSubmit() {
-    console.log('handle submit', this.state)
+    var clean = _.uniq(this.state.answers)
+    const data = {
+      answers: clean,
+      trait: this.props.data['0'].title
+    }
+    Meteor.call('insertUserAnswers', data)
   }
   render() {
     if (!this.props.loading) {

@@ -1,19 +1,15 @@
 import React, { PropTypes } from 'react';
 import { FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, PageHeader } from 'react-bootstrap'
 import { createContainer } from 'meteor/react-meteor-data';
+import _ from 'lodash'
 
 import { UserAnswers } from '../../api/userAnswers.js';
 
-const flexCenter = {
-  display: 'flex',
-  justifyContent: 'center'
-}
-const h2Style = {
-  marginBottom: '10px'
-}
-const pStyle = {
-  marginBottom: '40px'
-}
+const flexCenter = { display: 'flex', justifyContent: 'center' }
+const h2Style = { marginBottom: '10px' }
+const pStyle = { marginBottom: '40px' }
+const textCenter = { textAlign: 'center' }
+const columnCenter = { display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }
 
 
 
@@ -38,17 +34,27 @@ export class Answers extends React.Component {
   }
   render() {
     if (!this.props.loading) {
-      console.log('done loading', this.props.data)
-      var answers = this.props.data.map((a, index) => {
-        return <Row key={index}>
-          <div>
-            <p>{a.answers[index].question}</p>
-            <p>{a.answers[index].answer}</p>
-            <br />
+      var renderAnswers = [];
+      this.props.data.forEach((answer) => {
+        var heading = <div key={_.uniqueId()} style={flexCenter, columnCenter}>
+            <h3>{answer.trait}</h3>
+            <p>Answered On: {answer.createdAt.toDateString()}</p>
           </div>
-        </Row>
+        renderAnswers.push(heading)
+        answers = answer.answers.map((a, i) => {
+          return <Row style={flexCenter, textCenter} key={_.uniqueId()}>
+            <Col md={12} xs={12}>
+              <div>
+              <p>{a.question}</p>
+              <p>{a.answer}</p>
+              <br />
+              </div>
+            </Col>
+          </Row>
+        })
+        renderAnswers.push(answers)
       })
-      console.log('answers', answers)
+      flatAnswers = _.flattenDeep(renderAnswers)
       return (
         <Grid>
           <Row style={flexCenter}>
@@ -56,7 +62,7 @@ export class Answers extends React.Component {
               <h2 style={h2Style}>Past Answers</h2>
             </Col>
           </Row>
-          {answers}
+          {flatAnswers}
           <Row style={flexCenter}>
             <Col md={8} xs={12}>
             </Col>
