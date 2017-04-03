@@ -15,7 +15,6 @@ class Question extends React.Component {
   }
 
   blur() {
-    console.log('blur', this.props)
     this.props.afterBlur(this.state)
   }
 

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
-import { FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, PageHeader } from 'react-bootstrap'
+import { FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, PageHeader, Alert } from 'react-bootstrap'
 import { createContainer } from 'meteor/react-meteor-data';
+import { Link } from 'react-router'
 
 import { LearningQuestions } from '../../api/learning.js';
 import { UserAnswers } from '../../api/userAnswers.js'
@@ -27,7 +28,6 @@ class Question extends React.Component {
   }
 
   blur() {
-    console.log('blur', this.props)
     this.props.afterBlur(this.state)
   }
 
@@ -55,11 +55,16 @@ export class Learning extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      answers: []
+      answers: [],
+      alertVisible: false,
+      disabledButton: false
     }
 
     this.handleBlur = this.handleBlur.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.renderAlert = this.renderAlert.bind(this)
+    this.handleAlertDismiss = this.handleAlertDismiss.bind(this)
+    this.disabledButton = this.disabledButton.bind(this)
   }
 
   handleBlur(data) {
@@ -69,17 +74,37 @@ export class Learning extends React.Component {
     }
   }
 
+  handleAlertDismiss() {
+    this.setState({alertVisible: false})
+  }
+
+  renderAlert() {
+    if (this.state.alertVisible) {
+      return (
+        <Alert bsStyle="success" onDismiss={this.handleAlertDismiss}>
+          <h4>Your answers have been submitted succesfully.</h4>
+          <p>To view all past answers, go <Link to='/answers'><a>here</a></Link></p>
+        </Alert>
+      );
+    }
+  }
+
   handleSubmit() {
-    console.log('handle submit', this.state)
     var clean = _.uniq(this.state.answers)
-    console.log('clean', clean)
     const data = {
       answers: clean,
       trait: this.props.data['0'].title
     }
     Meteor.call('insertUserAnswers', data)
-
+    this.setState({alertVisible: true, disabledButton: true})
   }
+
+  disabledButton() {
+    if (this.state.disabledButton) {
+      return 'true'
+    }
+  }
+
   render() {
     if (!this.props.loading) {
       let questions = this.props.data['0']['questions'].map((q, index) => {
@@ -98,7 +123,12 @@ export class Learning extends React.Component {
             </Col>
           </Row>
           <Row style={flexCenter}>
-            <Button onClick={this.handleSubmit}>Submit Answers</Button>
+            <Col md={8}>
+              {this.renderAlert()}
+            </Col>
+          </Row>
+          <Row style={flexCenter}>
+            <Button onClick={this.handleSubmit} disabled={this.state.disabledButton}>Submit Answers</Button>
           </Row>
         </Grid>
       )
