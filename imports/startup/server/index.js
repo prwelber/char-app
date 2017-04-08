@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import { LearningQuestions } from '/imports/api/learning.js';
 import { HumilityQuestions } from '/imports/api/humility.js';
+import { OpennessQuestions } from '/imports/api/openness.js';
 
 if (Meteor.isServer) {
   Meteor.startup(() => {
@@ -33,6 +34,22 @@ if (Meteor.isServer) {
       data['description'] = 'Humility description placeholder here'
       data['title'] = 'Humility'
       Meteor.call('humility.insert', data)
+    }
+  })
+  Meteor.startup(() => {
+    let questionCount = OpennessQuestions.find({}).count();
+
+    console.log('openness q count', questionCount)
+    if (questionCount < 1) {
+      let data = {};
+      data['questions'] = [
+        'What are your thoughts on idealogical openness?',
+        'Are you open to hearing new ideas and opinions?',
+        'When is the last time you changed your mind about something?'
+      ]
+      data['description'] = 'Openness description placeholder here'
+      data['title'] = 'Openness'
+      Meteor.call('openness.insert', data)
     }
   })
 }

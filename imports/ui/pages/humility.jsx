@@ -47,7 +47,10 @@ export class Humility extends React.Component {
       answers: clean,
       trait: this.props.data['0'].title
     }
-    Meteor.call('insertUserAnswers', data)
+    Meteor.call('insertUserAnswers', data, (err, res) => {
+      if (err) console.log('err', err)
+      else console.log('res', res)
+    })
   }
   render() {
     if (!this.props.loading) {

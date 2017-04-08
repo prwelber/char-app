@@ -16,6 +16,15 @@ Meteor.methods({
     console.log('insertUserAnswers', data)
     check(data, Object);
     check(data.answers, Array)
+    //
+    // var recent = UserAnswers.findOne({trait: data.trait}, {sort: {createdAt: -1}})
+    // var n = new Date(recent.createdAt.toISOString())
+    // var recentDate = n.getDate()
+    //
+    // var d = new Date()
+    // var date = d.getDate()
+    //
+    // console.log(recentDate, date)
 
     // user should be logge din before inserting task
     if (!Meteor.userId()) {

@@ -3,12 +3,23 @@ import { FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, PageHeade
 import { createContainer } from 'meteor/react-meteor-data';
 import { Link } from 'react-router'
 
-import { LearningQuestions } from '../../api/learning.js';
+import { OpennessQuestions } from '../../api/openness.js';
 import { UserAnswers } from '../../api/userAnswers.js';
 import Question from './Question.jsx'
 import QuestionContainer from './QuestionContainer.jsx'
+//
+// const flexCenter = {
+//   display: 'flex',
+//   justifyContent: 'center'
+// }
+// const h2Style = {
+//   marginBottom: '50px'
+// }
+// const pStyle = {
+//   marginBottom: '40px'
+// }
 
-export class Learning extends React.Component {
+export class Openness extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -27,21 +38,21 @@ export class Learning extends React.Component {
   }
 }
 
-Learning.propTypes = {
+Openness.propTypes = {
   data: PropTypes.array.isRequired
 }
 
-//
-export default learningContainer = createContainer(() => {
+
+export default opennessContainer = createContainer(() => {
   // Meteor.subscribe('learning')
 
-  const qaHandle = Meteor.subscribe('learning')
+  const qaHandle = Meteor.subscribe('openness')
   const loading = !qaHandle.ready();
 
   return {
     loading,
-    data: !loading ? LearningQuestions.find({}).fetch() : [],
-    questionCount: LearningQuestions.find({}).count(),
+    data: !loading ? OpennessQuestions.find({}).fetch() : [],
+    questionCount: OpennessQuestions.find({}).count(),
     currentUser: Meteor.user(),
   };
-}, Learning);
+}, Openness);

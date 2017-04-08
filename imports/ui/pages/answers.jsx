@@ -67,9 +67,6 @@ export class Answers extends React.Component {
             <Col md={8} xs={12}>
             </Col>
           </Row>
-          <Row style={flexCenter}>
-            <Button onClick={this.handleSubmit}>Submit Answers</Button>
-          </Row>
         </Grid>
       )
     } else {
