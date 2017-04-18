@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor'
 import { LearningQuestions } from '/imports/api/learning.js';
 import { HumilityQuestions } from '/imports/api/humility.js';
 import { OpennessQuestions } from '/imports/api/openness.js';
+import { ToleranceQuestions } from '/imports/api/tolerance.js';
 
 if (Meteor.isServer) {
   Meteor.startup(() => {
@@ -52,4 +53,21 @@ if (Meteor.isServer) {
       Meteor.call('openness.insert', data)
     }
   })
+  Meteor.startup(() => {
+    let questionCount = ToleranceQuestions.find({}).count();
+
+    console.log('tolerance q count', questionCount)
+    if (questionCount < 1) {
+      let data = {};
+      data['questions'] = [
+        'What are your thoughts on tolerance?',
+        'Are you tolerant of those different from you?'
+      ]
+      data['description'] = 'Tolerance description placeholder here'
+      data['title'] = 'Tolerance'
+      Meteor.call('tolerance.insert', data)
+    }
+  })
+
+
 }

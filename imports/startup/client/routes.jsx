@@ -12,6 +12,7 @@ import { Two } from '../../ui/pages/two.jsx';
 import learningContainer from '../../ui/pages/learning.jsx'
 import humilityContainer from '../../ui/pages/humility.jsx'
 import opennessContainer from '../../ui/pages/openness.jsx'
+import toleranceContainer from '../../ui/pages/tolerance.jsx'
 import Answers from '../../ui/pages/answers.jsx'
 
 import { NotFound } from '../../ui/pages/not-found.jsx'
@@ -38,6 +39,7 @@ Meteor.startup( () => {
         <Route path="/t/learning" component={ learningContainer } onEnter={requireAuth} />
         <Route path="/t/humility" component={ humilityContainer } onEnter={requireAuth} />
         <Route path="/t/openness" component={ opennessContainer } onEnter={requireAuth} />
+        <Route path="/t/tolerance" component={ toleranceContainer } onEnter={requireAuth} />
       </Route>
       <Route path="*" component={ NotFound } />
     </Router>,

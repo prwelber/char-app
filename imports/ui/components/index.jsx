@@ -15,8 +15,6 @@ const buttonColStyle = {
   height: '100vh'
 }
 
-
-
 export class Index extends Component {
   constructor(props) {
     super(props);

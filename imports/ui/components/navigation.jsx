@@ -1,6 +1,6 @@
 import React from 'react';
 import { IndexLink, Link } from 'react-router';
-import { Navbar, Nav, NavItem } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, Image } from 'react-bootstrap'
 
 import AccountsUIWrapper from '../AccountsUIWrapper.jsx';
 
@@ -21,7 +21,11 @@ export const Navigation = () => (
       </Nav>
       <Nav pullRight>
         <NavItem style={accountsStyle}><AccountsUIWrapper /></NavItem>
+        <Navbar.Brand pullRight>
+          <Image src="/images/logo.png" />
+        </Navbar.Brand>
       </Nav>
+
     </Navbar>
 
 
