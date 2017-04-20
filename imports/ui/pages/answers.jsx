@@ -16,10 +16,11 @@ const columnCenter = { display: 'flex', justifyContent: 'center', flexDirection:
 export class Answers extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {value: ''}
 
     this.handleBlur = this.handleBlur.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    // this.handleTraitSelection = this.handleTraitSelection.bind(this)
   }
 
   handleBlur(data) {
@@ -29,13 +30,22 @@ export class Answers extends React.Component {
     }
   }
 
+  handleTraitSelection(event) {
+    this.setState({value: this.inputEl.value})
+  }
+
   handleSubmit() {
     console.log('handle submit', this.state)
   }
   render() {
     if (!this.props.loading) {
+
       var renderAnswers = [];
-      this.props.data.forEach((answer) => {
+      let filtered = this.props.data;
+      if (this.state.value) {
+        filtered = this.props.data.filter(d => d.trait === this.state.value)
+      }
+      filtered.forEach((answer) => {
         var heading = <div key={_.uniqueId()} style={flexCenter, columnCenter}>
             <h3>{answer.trait}</h3>
             <p>Answered On: {answer.createdAt.toDateString()}</p>
@@ -57,6 +67,24 @@ export class Answers extends React.Component {
       flatAnswers = _.flattenDeep(renderAnswers)
       return (
         <Grid>
+          <Row>
+            <Col md={3}>
+              <FormGroup controlId="formControlsSelect">
+                <ControlLabel>View Answers by Trait</ControlLabel>
+                <FormControl
+                componentClass="select"
+                inputRef={ el => this.inputEl=el }
+                onChange={this.handleTraitSelection.bind(this)}
+                value={this.state.value}>
+                  <option value="">All</option>
+                  <option value="Love of Learning">Love of Learning</option>
+                  <option value="Humility">Humility</option>
+                  <option value="Openness">Ideological Openness</option>
+                  <option value="Tolerance">Tolerance</option>
+                </FormControl>
+              </FormGroup>
+            </Col>
+          </Row>
           <Row style={flexCenter}>
             <Col md={12} xs={12} style={flexCenter}>
               <h2 style={h2Style}>Past Answers</h2>
@@ -83,8 +111,6 @@ Answers.propTypes = {
 
 //
 export default answersContainer = createContainer(() => {
-  // Meteor.subscribe('learning')
-
   const answersHandle = Meteor.subscribe('userAnswers')
   const loading = !answersHandle.ready();
 
