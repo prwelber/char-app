@@ -5,11 +5,12 @@ import _ from 'lodash'
 
 import { UserAnswers } from '../../api/userAnswers.js';
 
-const flexCenter = { display: 'flex', justifyContent: 'center' }
+const flexCenter = { display: 'flex', /*justifyContent: 'center'*/ }
 const h2Style = { marginBottom: '10px' }
 const pStyle = { marginBottom: '40px' }
 const textCenter = { textAlign: 'center' }
-const columnCenter = { display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }
+const fw500 = { fontWeight: 500}
+const columnCenter = { display: 'flex', /*justifyContent: 'center',*/ flexDirection: 'column', /*alignItems: 'center'*/ }
 
 
 
@@ -52,10 +53,10 @@ export class Answers extends React.Component {
           </div>
         renderAnswers.push(heading)
         answers = answer.answers.map((a, i) => {
-          return <Row style={flexCenter, textCenter} key={_.uniqueId()}>
+          return <Row style={flexCenter} key={_.uniqueId()}>
             <Col md={12} xs={12}>
               <div>
-              <p>{a.question}</p>
+              <p style={fw500}>{a.question}</p>
               <p>{a.answer}</p>
               <br />
               </div>

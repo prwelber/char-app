@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import { Grid, Col, Row } from 'react-bootstrap'
+import { Grid, Col, Row, Image } from 'react-bootstrap'
 
 const traitData = [
       {
@@ -32,15 +32,20 @@ const traitData = [
       }
     ]
 
-  const traitStyle = {
-    minHeight: '130px'
-  }
+  const traitStyle = { minHeight: '130px' }
+  const imgStyle = { width: '85px', height: 'auto' }
+  const h3Style = { marginTop: '0px' }
 
   const Trait = (t) => {
-    return <Col style={traitStyle} md={6} sm={12} xs={12}>
-      <Link to={t.link}><h3>{t.title}</h3></Link>
-      <p>{t.text}</p>
-    </Col>
+    return <div>
+      <Col md={1} sm={1} xs={1}>
+        <Image src={`/images/${t.title}.jpg`} style={ imgStyle } />
+      </Col>
+      <Col style={traitStyle} md={5} sm={11} xs={11}>
+        <Link to={t.link}><h3 style={ h3Style }>{t.title}</h3></Link>
+        <p>{t.text}</p>
+      </Col>
+    </div>
   }
 
   export const Traits = () => {
