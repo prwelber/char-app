@@ -3,7 +3,7 @@ import { FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, PageHeade
 import { createContainer } from 'meteor/react-meteor-data';
 
 import { HumilityQuestions } from '../../api/humility.js';
-
+import QuestionContainer from './QuestionContainer.jsx'
 import Question from './Question.jsx'
 
 import _ from 'lodash'
@@ -26,62 +26,17 @@ const pStyle = {
 export class Humility extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      answers: []
-    }
-
-    this.handleBlur = this.handleBlur.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.state = {}
   }
 
-  handleBlur(data) {
-    if (data.answer) {
-      let updated = this.state.answers.concat([data])
-      this.setState({answers: updated})
-    }
-  }
-
-  handleSubmit() {
-    var clean = _.uniq(this.state.answers)
-    const data = {
-      answers: clean,
-      trait: this.props.data['0'].title
-    }
-    Meteor.call('insertUserAnswers', data, (err, res) => {
-      if (err) console.log('err', err)
-      else console.log('res', res)
-    })
-  }
   render() {
     if (!this.props.loading) {
-      let questions = this.props.data['0']['questions'].map((q, index) => {
-        return <Question question={q} afterBlur={this.handleBlur} key={index} />
-      })
       return (
-        <Grid>
-          <Row style={flexCenter}>
-            <Col md={12} xs={12} style={flexCenter}>
-              <h2 style={h2Style}>{this.props.data['0'].title}</h2>
-            </Col>
-          </Row>
-          <Row style={flexCenter}>
-            <Col md={12} xs={12} style={flexCenter}>
-              <p style={pStyle}>{this.props.data['0'].description}</p>
-            </Col>
-          </Row>
-          <Row style={flexCenter}>
-            <Col md={8} xs={12}>
-              {questions}
-            </Col>
-          </Row>
-          <Row style={flexCenter}>
-            <Button onClick={this.handleSubmit}>Submit Answers</Button>
-          </Row>
-        </Grid>
+        <QuestionContainer questions={this.props.data['0']['questions']} title={this.props.data['0'].title} route={this.props.route.path}/>
       )
     } else {
       return (
-        <h3>Loading...</h3>
+        <h3>Loading..</h3>
       )
     }
   }

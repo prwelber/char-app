@@ -15,6 +15,13 @@ const pStyle = {
   marginBottom: '40px'
 }
 
+const traitList = {
+  1: 'learning',
+  2: 'humility',
+  3: 'openness',
+  4: 'tolerance'
+}
+
 class QuestionContainer extends React.Component {
   constructor(props) {
     super(props)
@@ -43,11 +50,15 @@ class QuestionContainer extends React.Component {
   }
 
   renderAlert() {
+    let matched = this.props.route.match(/\/t\/?(.*)/)[1]
+    let index = Object.values(traitList).indexOf(matched)
+    let nextTrait = Object.values(traitList)[index + 1]
+
     if (this.state.alertVisible) {
       return (
         <Alert bsStyle="success" onDismiss={this.handleAlertDismiss}>
           <h4>Your answers have been submitted succesfully.</h4>
-          <p>To view all past answers, go <Link to='/answers'>here</Link></p>
+          <p>To view all past answers, go <Link to='/answers'>here</Link>, or you can start answering questions for the <Link to={`/t/${nextTrait}`}>next trait</Link></p>
         </Alert>
       );
     }

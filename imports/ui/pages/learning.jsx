@@ -17,7 +17,7 @@ export class Learning extends React.Component {
   render() {
     if (!this.props.loading) {
       return (
-        <QuestionContainer questions={this.props.data['0']['questions']} title={this.props.data['0'].title} />
+        <QuestionContainer questions={this.props.data['0']['questions']} title={this.props.data['0'].title} route={this.props.route.path}/>
       )
     } else {
       return (
