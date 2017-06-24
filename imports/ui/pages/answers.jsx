@@ -1,18 +1,18 @@
 import React, { PropTypes } from 'react';
-import { FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, PageHeader } from 'react-bootstrap'
+import { FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, PageHeader, Panel } from 'react-bootstrap'
 import { createContainer } from 'meteor/react-meteor-data';
 import _ from 'lodash'
 
 import { UserAnswers } from '../../api/userAnswers.js';
 
-const flexCenter = { display: 'flex', /*justifyContent: 'center'*/ }
+const flexCenter = { display: 'flex', justifyContent: 'center' }
 const h2Style = { marginBottom: '10px' }
 const pStyle = { marginBottom: '40px' }
 const textCenter = { textAlign: 'center' }
-const fw500 = { fontWeight: 500}
+const fw500 = { fontWeight: 500 }
 const columnCenter = { display: 'flex', /*justifyContent: 'center',*/ flexDirection: 'column', /*alignItems: 'center'*/ }
-
-
+const blueBarDescription = { backgroundColor: '#6fced5', height: '150px', width: '100%', margin: '50px 0 50px 0', display: 'flex', alignItems: 'center' }
+const blueBarText = { textAlign: 'center', width: '60%' }
 
 export class Answers extends React.Component {
   constructor(props) {
@@ -54,11 +54,14 @@ export class Answers extends React.Component {
         renderAnswers.push(heading)
         answers = answer.answers.map((a, i) => {
           return <Row style={flexCenter} key={_.uniqueId()}>
-            <Col md={12} xs={12}>
+            <Col md={6} xs={12}>
               <div>
-              <p style={fw500}>{a.question}</p>
-              <p>{a.answer}</p>
-              <br />
+              {/* <p style={fw500}>{a.question}</p>
+              <p>{a.answer}</p> */}
+              <Panel header={a.question}>
+                {a.answer}
+              </Panel>
+              {/* <br /> */}
               </div>
             </Col>
           </Row>
@@ -67,7 +70,19 @@ export class Answers extends React.Component {
       })
       flatAnswers = _.flattenDeep(renderAnswers)
       return (
-        <Grid>
+        <div>
+          <Row style={flexCenter}>
+            <Col md={12} xs={12} style={flexCenter}>
+              <h2 style={h2Style}>Past Answers</h2>
+            </Col>
+          </Row>
+          <Row style={blueBarDescription}>
+            <Col md={12} style={flexCenter}>
+              <p style={blueBarText}>
+                Your previous answers are displayed here, so you can track your progress and see if your character, or your perception of your character is changing. You can answer questions as many times as you like.
+              </p>
+            </Col>
+          </Row>
           <Row>
             <Col md={3}>
               <FormGroup controlId="formControlsSelect">
@@ -86,17 +101,13 @@ export class Answers extends React.Component {
               </FormGroup>
             </Col>
           </Row>
-          <Row style={flexCenter}>
-            <Col md={12} xs={12} style={flexCenter}>
-              <h2 style={h2Style}>Past Answers</h2>
-            </Col>
-          </Row>
+
           {flatAnswers}
           <Row style={flexCenter}>
             <Col md={8} xs={12}>
             </Col>
           </Row>
-        </Grid>
+        </div>
       )
     } else {
       return (

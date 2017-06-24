@@ -70,7 +70,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="">
         <header>
           <h1>Todo List ({this.props.incompleteCount})</h1>
         </header>

@@ -7,8 +7,6 @@ import { Index } from '../../ui/components/index.jsx';
 
 import { Traits } from '../../ui/pages/traits.jsx'
 
-import { One } from '../../ui/pages/one.jsx';
-import { Two } from '../../ui/pages/two.jsx';
 import learningContainer from '../../ui/pages/learning.jsx'
 import humilityContainer from '../../ui/pages/humility.jsx'
 import opennessContainer from '../../ui/pages/openness.jsx'
@@ -31,10 +29,7 @@ Meteor.startup( () => {
       {/* <Route path="/welcome" component={ Welcome }/> */}
       <Route path="/" component={ App }>
         <IndexRoute component={ Index } />
-        <Route path="/traits" component={ Traits }>
-          <Route path="/one" component={ One } />
-          <Route path="/two" component={ Two } />
-        </Route>
+        <Route path="/traits" component={ Traits }></Route>
         <Route path="/answers" component={ answersContainer } />
         <Route path="/t/learning" component={ learningContainer } onEnter={requireAuth} />
         <Route path="/t/humility" component={ humilityContainer } onEnter={requireAuth} />

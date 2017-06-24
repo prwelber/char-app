@@ -32,9 +32,11 @@ const traitData = [
       }
     ]
 
+  const centerText = { textAlign: 'center' }
   const traitStyle = { minHeight: '130px' }
   const imgStyle = { width: '85px', height: 'auto' }
   const h3Style = { marginTop: '0px' }
+  const h2Style = { marginBottom: '50px', fontWeight: '300' }
 
   const Trait = (t) => {
     return <div>
@@ -54,6 +56,11 @@ const traitData = [
     })
     return <div className="">
       <Grid>
+        <Row>
+          <Col md={12} style={centerText}>
+            <h2 style={h2Style}>Select a trait to view prompts and submit answers.</h2>
+          </Col>
+        </Row>
         <Row>
           {traits}
         </Row>
