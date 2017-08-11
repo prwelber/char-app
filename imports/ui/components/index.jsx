@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router'
 import { Jumbotron, Grid, Row, Col, Button } from 'react-bootstrap'
-
+import styled from 'styled-components';
 import AccountsUIWrapper from '../AccountsUIWrapper.jsx';
 
 const jumboStyle = {
@@ -14,6 +14,10 @@ const buttonColStyle = {
   alignItems: 'center',
   height: '100vh'
 }
+
+const TitleQuestion = styled.h1`
+  // color: blue !important;
+`;
 
 export class Index extends Component {
   constructor(props) {
@@ -42,7 +46,7 @@ export class Index extends Component {
         <Row>
           <Col md={8}>
             <Jumbotron style={jumboStyle}>
-              <h1>What is this website?</h1>
+              <TitleQuestion classNa>What is this website?</TitleQuestion>
               <p>The Character Building Tool, inspired by an Op-Ed article in the New York Times by David Brooks, is designed to help you reflect on your own self, your character, and your values. You will be able to answer pointed questions pertaining to these 9 fundamental traits:</p>
               <ol>
                 <li>Love of Learning</li>

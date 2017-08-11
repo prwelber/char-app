@@ -3,12 +3,12 @@ import { FormGroup, ControlLabel, FormControl, Grid, Row, Col, Button, PageHeade
 import { createContainer } from 'meteor/react-meteor-data';
 import { Link } from 'react-router'
 
-import { ToleranceQuestions } from '../../api/tolerance.js';
+import { ResilienceQuestions } from '../../api/resilience.js';
 import { UserAnswers } from '../../api/userAnswers.js';
 import Question from './Question.jsx'
 import QuestionContainer from './QuestionContainer.jsx'
 
-export class Tolerance extends React.Component {
+export class Resilience extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -17,7 +17,11 @@ export class Tolerance extends React.Component {
   render() {
     if (!this.props.loading) {
       return (
-        <QuestionContainer questions={this.props.data['0']['questions']} title={this.props.data['0'].title} route={this.props.route.path} />
+        <QuestionContainer
+          questions={this.props.data['0']['questions']}
+          title={this.props.data['0'].title}
+          route={this.props.route.path}
+        />
       )
     } else {
       return (
@@ -27,19 +31,19 @@ export class Tolerance extends React.Component {
   }
 }
 
-Tolerance.propTypes = {
+Resilience.propTypes = {
   data: PropTypes.array.isRequired
 }
 
 
-export default toleranceContainer = createContainer(() => {
-  const qaHandle = Meteor.subscribe('tolerance')
+export default resilienceContainer = createContainer(() => {
+  const qaHandle = Meteor.subscribe('resilience')
   const loading = !qaHandle.ready();
 
   return {
     loading,
-    data: !loading ? ToleranceQuestions.find({}).fetch() : [],
-    questionCount: ToleranceQuestions.find({}).count(),
+    data: !loading ? ResilienceQuestions.find({}).fetch() : [],
+    questionCount: ResilienceQuestions.find({}).count(),
     currentUser: Meteor.user(),
   };
-}, Tolerance);
+}, Resilience);

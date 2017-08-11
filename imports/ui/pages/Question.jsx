@@ -25,6 +25,7 @@ class Question extends React.Component {
           <ControlLabel>{this.props.question}</ControlLabel>
           <FormControl
             type="text"
+            componentClass="textarea"
             value={this.state.value}
             placeholder="Enter Your Answer"
             onChange={this.handleChange}

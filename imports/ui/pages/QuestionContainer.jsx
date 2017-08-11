@@ -4,6 +4,13 @@ import { Link } from 'react-router'
 
 import Question from './Question.jsx'
 
+const traitList = {
+  1: 'learning',
+  2: 'humility',
+  3: 'openness',
+  4: 'tolerance'
+}
+
 const flexCenter = {
   display: 'flex',
   justifyContent: 'center'
@@ -15,20 +22,14 @@ const pStyle = {
   marginBottom: '40px'
 }
 
-const traitList = {
-  1: 'learning',
-  2: 'humility',
-  3: 'openness',
-  4: 'tolerance'
-}
-
 class QuestionContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       answers: [],
       alertVisible: false,
-      disabledButton: false
+      disabledButton: false,
+      showEmptyWarning: false
     }
 
     this.handleBlur = this.handleBlur.bind(this)
@@ -36,6 +37,7 @@ class QuestionContainer extends React.Component {
     this.renderAlert = this.renderAlert.bind(this)
     this.handleAlertDismiss = this.handleAlertDismiss.bind(this)
     this.disabledButton = this.disabledButton.bind(this)
+    this.renderEmptyWarning = this.renderEmptyWarning.bind(this)
   }
 
   handleBlur(data) {
@@ -47,6 +49,7 @@ class QuestionContainer extends React.Component {
 
   handleAlertDismiss() {
     this.setState({alertVisible: false})
+    this.setState({emptyWarningVisible: false})
   }
 
   renderAlert() {
@@ -64,21 +67,34 @@ class QuestionContainer extends React.Component {
     }
   }
 
+  renderEmptyWarning() {
+    if (this.state.emptyWarningVisible) {
+      return (
+        <Alert bsStyle="success" onDismiss={this.handleAlertDismiss}>
+          <h4>You must answer at least one question.</h4>
+        </Alert>
+      );
+    }
+  }
+
   handleSubmit() {
-    var clean = _.uniq(this.state.answers)
+    var cleaned = _.uniq(this.state.answers)
     const data = {
-      answers: clean,
+      answers: cleaned,
       trait: this.props.title
     }
-    Meteor.call('insertUserAnswers', data, (err, res) => {
-      if (err) {
-        throw new Meteor.Error(err)
-      } else {
-        this.setState({alertVisible: true, disabledButton: true})
-      }
-
-    })
-
+    console.log(data.answers)
+    if (data.answers.length === 0) {
+      this.setState({showEmptyWarning: true})
+    } else {
+      Meteor.call('insertUserAnswers', data, (err, res) => {
+        if (err) {
+          throw new Meteor.Error(err)
+        } else {
+          this.setState({alertVisible: true, disabledButton: true})
+        }
+      })
+    }
   }
 
   disabledButton() {
@@ -107,6 +123,11 @@ class QuestionContainer extends React.Component {
           <Row style={flexCenter}>
             <Col md={8}>
               {this.renderAlert()}
+            </Col>
+          </Row>
+          <Row style={flexCenter}>
+            <Col md={8}>
+              {this.renderEmptyWarning()}
             </Col>
           </Row>
           <Row style={flexCenter}>

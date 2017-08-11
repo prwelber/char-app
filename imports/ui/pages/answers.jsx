@@ -10,17 +10,18 @@ const h2Style = { marginBottom: '10px' }
 const pStyle = { marginBottom: '40px' }
 const textCenter = { textAlign: 'center' }
 const fw500 = { fontWeight: 500 }
-const columnCenter = { display: 'flex', /*justifyContent: 'center',*/ flexDirection: 'column', /*alignItems: 'center'*/ }
-const blueBarDescription = { backgroundColor: '#6fced5', height: '150px', width: '100%', margin: '50px 0 50px 0', display: 'flex', alignItems: 'center' }
+const columnCenter = { display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }
+const blueBarDescription = { backgroundColor: '#6fced5', height: '150px', width: '100%', margin: '-20px 0 50px 0', display: 'flex', alignItems: 'center', flexDirection: 'column' }
 const blueBarText = { textAlign: 'center', width: '60%' }
+const panelHeader = { backgroundColor: '#123962', color: 'white' }
 
 export class Answers extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = {value: ''}
+    super(props);
+    this.state = {value: ''};
 
-    this.handleBlur = this.handleBlur.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleBlur = this.handleBlur.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     // this.handleTraitSelection = this.handleTraitSelection.bind(this)
   }
 
@@ -54,14 +55,13 @@ export class Answers extends React.Component {
         renderAnswers.push(heading)
         answers = answer.answers.map((a, i) => {
           return <Row style={flexCenter} key={_.uniqueId()}>
-            <Col md={6} xs={12}>
+            <Col md={6} xs={8}>
               <div>
               {/* <p style={fw500}>{a.question}</p>
               <p>{a.answer}</p> */}
               <Panel header={a.question}>
                 {a.answer}
               </Panel>
-              {/* <br /> */}
               </div>
             </Col>
           </Row>
@@ -71,32 +71,32 @@ export class Answers extends React.Component {
       flatAnswers = _.flattenDeep(renderAnswers)
       return (
         <div>
-          <Row style={flexCenter}>
+          <Row style={blueBarDescription}>
             <Col md={12} xs={12} style={flexCenter}>
               <h2 style={h2Style}>Past Answers</h2>
             </Col>
-          </Row>
-          <Row style={blueBarDescription}>
             <Col md={12} style={flexCenter}>
               <p style={blueBarText}>
-                Your previous answers are displayed here, so you can track your progress and see if your character, or your perception of your character is changing. You can answer questions as many times as you like.
+                Your previous answers are displayed here, so you can track your progress and see if your character, or your perception of your character, is changing. You can answer questions as many times as you like.
               </p>
             </Col>
           </Row>
           <Row>
-            <Col md={3}>
-              <FormGroup controlId="formControlsSelect">
+            <Col md={3} style={flexCenter, columnCenter}>
+              <FormGroup controlId='formControlsSelect'>
                 <ControlLabel>View Answers by Trait</ControlLabel>
                 <FormControl
-                componentClass="select"
-                inputRef={ el => this.inputEl=el }
+                componentClass='select'
+                inputRef={ el => this.inputEl = el }
                 onChange={this.handleTraitSelection.bind(this)}
                 value={this.state.value}>
-                  <option value="">All</option>
-                  <option value="Love of Learning">Love of Learning</option>
-                  <option value="Humility">Humility</option>
-                  <option value="Openness">Ideological Openness</option>
-                  <option value="Tolerance">Tolerance</option>
+                  <option value=''>All</option>
+                  <option value='Love of Learning'>Love of Learning</option>
+                  <option value='Humility'>Humility</option>
+                  <option value='Openness'>Ideological Openness</option>
+                  <option value='Tolerance'>Tolerance</option>
+                  <option value='Generosity'>Generosity</option>
+                  <option value='Autonomy'>Autonomy</option>
                 </FormControl>
               </FormGroup>
             </Col>
